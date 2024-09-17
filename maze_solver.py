@@ -1,5 +1,6 @@
 # (bottom,right,top,left)
 import json
+from typing import List,Dict
 
 square_types = {
     1:[0,0,0,1],
@@ -29,7 +30,7 @@ sample_maze = [[14, 10, 7, 8, 10, 7],
 
 discorvered_maze = {}
 
-size = 6
+size = len(sample_maze)
 start = (0,0)
 goal=(4,3)
 fill_dict = {}
@@ -73,7 +74,8 @@ def initial_flood_fill() :
             fill_dict[neighbours[neighbour]] = fill_dict[parent] + 1
             que.append(neighbours[neighbour])
         del que[0]
-        # i = i+1
+
+    show_matrix(fill_dict,start)
 
     # print(i)
 # Gets blank neighbours cannot be used while updating mostly
@@ -158,12 +160,34 @@ def find_path():
                 next_cell = neighbour
                 break
 
+        show_matrix(fill_dict,current_cell)
         current_cell = next_cell
         discorvered_maze[current_cell] = get_current_cell_data(current_cell)
         path.append(next_cell)
 
+
     return path
 
+def show_matrix(fillDict : Dict[tuple,int],current_cell):
+    coordinates = fillDict.keys()
+    row = 5
+    print("-" * 100)
+    while row >= 0:
+        column = 0
+        while column < 6:
+            if(current_cell == (row,column)):
+                print(f"{fill_dict[current_cell]}*",end = " ")
+                column  += 1
+                continue
+            for coordinate in coordinates:
+                if (coordinate[0] == row and coordinate[1] == column):
+                    print(fillDict[coordinate],end="  ")
+                    break
 
+            column += 1
+
+        print("\n")
+        row -= 1
+    print("-" * 100)
 if __name__ == "__main__":
     main()

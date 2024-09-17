@@ -31,11 +31,15 @@ sample_maze = [[14, 10, 7, 8, 10, 7],
 
 size_x = 100
 size_y = 100
+side = len(sample_maze) * 100
 path = maze_solver.find_path()
+
+
 def main():
     convert_maze()
-    # print(sample_maze)
-    draw()
+    draw_maze()
+    draw_path(100, side)
+    turtle.done()
 
 
 def convert_maze():
@@ -43,9 +47,9 @@ def convert_maze():
         for column_index in range(len(row)):
             row[column_index] = square_types[row[column_index]]
 
-def draw():
+def draw_maze():
     # Init
-    side = len(sample_maze) * 100
+
     # Assuming the maze is a square as in the rules its written that
     # The maze is composed of multiples of an 18 cm x 18 cm unit square
     #  The maze comprises up to 16 x 16 unit squares
@@ -65,8 +69,7 @@ def draw():
     draw_box(side)
     draw_horizontal(100,side)
     draw_vertical(100,side)
-    draw_path(100,side)
-    turtle.done()
+
 
 def to_corner(side):
     pen.penup()
@@ -153,6 +156,7 @@ def draw_path(side_unit,side):
         x = coordinate[0]
         y = coordinate[1]
         pen.goto(translated_coord+(y*side_unit),translated_coord+(x*side_unit))
+
 
 if __name__ == "__main__":
     main()
